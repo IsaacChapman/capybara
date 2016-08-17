@@ -92,9 +92,7 @@ module Capybara
       # @param [String] value    The new value
       # @param [Hash{}] options  Driver specific options for how to set the value
       #
-      def set(value, options={})
-        options ||= {}
-
+      def set(value, **options)
         raise Capybara::ReadOnlyElementError, "Attempt to set readonly element with value: #{value}" if readonly?
 
         driver_supports_options = (base.method(:set).arity != 1)

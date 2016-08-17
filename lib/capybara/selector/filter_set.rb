@@ -12,7 +12,7 @@ module Capybara
         instance_eval(&block)
       end
 
-      def filter(name, options={}, &block)
+      def filter(name, **options, &block)
         filters[name] = Filter.new(name, block, options)
       end
 
@@ -20,7 +20,7 @@ module Capybara
         descriptions.push block
       end
 
-      def description(options={})
+      def description(**options)
         @descriptions.map {|desc| desc.call(options).to_s }.join
       end
 

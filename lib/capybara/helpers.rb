@@ -58,17 +58,17 @@ module Capybara
     # options are provided, it tests that all conditions are met;
     # however, if :count is supplied, all other options are ignored.
     #
-    # @param [Integer] count     The actual number. Should be coercible via Integer()
-    # @option [Range] between    Count must be within the given range
-    # @option [Integer] count    Count must be exactly this
-    # @option [Integer] maximum  Count must be smaller than or equal to this value
-    # @option [Integer] minimum  Count must be larger than or equal to this value
+    # @param [Integer] result_count     The actual number. Should be coercible via Integer()
+    # @option [Range] between    result_count must be within the given range
+    # @option [Integer] count    result_count must be exactly this
+    # @option [Integer] maximum  result_count must be smaller than or equal to this value
+    # @option [Integer] minimum  result_count must be larger than or equal to this value
     #
-    def matches_count?(count, options={})
-      return (Integer(options[:count]) == count)     if options[:count]
-      return false if options[:maximum] && (Integer(options[:maximum]) < count)
-      return false if options[:minimum] && (Integer(options[:minimum]) > count)
-      return false if options[:between] && !(options[:between] === count)
+    def matches_count?(result_count, count: nil, minimum: nil, maximum: nil, between: nil, **ignored_options)
+      return (Integer(count) == result_count)     if count
+      return false if maximum && (Integer(maximum) < result_count)
+      return false if minimum && (Integer(minimum) > result_count)
+      return false if between && !(between === result_count)
       return true
     end
 
@@ -96,16 +96,16 @@ module Capybara
     # @option [Integer] maximum     Count should have been smaller than or equal to this value
     # @option [Integer] minimum     Count should have been larger than or equal to this value
     #
-    def failure_message(description, options={})
+    def failure_message(description, count: nil, between: nil, minimum: nil, maximum: nil, **ignored_options)
       message = String.new("expected to find #{description}")
-      if options[:count]
-        message << " #{options[:count]} #{declension('time', 'times', options[:count])}"
-      elsif options[:between]
-        message << " between #{options[:between].first} and #{options[:between].last} times"
-      elsif options[:maximum]
-        message << " at most #{options[:maximum]} #{declension('time', 'times', options[:maximum])}"
-      elsif options[:minimum]
-        message << " at least #{options[:minimum]} #{declension('time', 'times', options[:minimum])}"
+      if count
+        message << " #{count} #{declension('time', 'times', count)}"
+      elsif between
+        message << " between #{between.first} and #{between.last} times"
+      elsif maximum
+        message << " at most #{maximum} #{declension('time', 'times', maximum)}"
+      elsif minimum
+        message << " at least #{minimum} #{declension('time', 'times', minimum)}"
       end
       message
     end

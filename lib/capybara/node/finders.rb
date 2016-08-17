@@ -73,8 +73,7 @@ module Capybara
       # @return [Capybara::Node::Element]   The found element
       #
 
-      def find_field(locator=nil, options={})
-        locator, options = nil, locator if locator.is_a? Hash
+      def find_field(locator=nil, **options)
         find(:field, locator, options)
       end
       alias_method :field_labeled, :find_field
@@ -91,8 +90,7 @@ module Capybara
       #   @option options [String,Regexp] href        Value to match against the links href
       # @return [Capybara::Node::Element]   The found element
       #
-      def find_link(locator=nil, options={})
-        locator, options = nil, locator if locator.is_a? Hash
+      def find_link(locator=nil, **options)
         find(:link, locator, options)
       end
 
@@ -116,8 +114,7 @@ module Capybara
       #                                                       * :all - finds either an enabled or disabled button
       # @return [Capybara::Node::Element]   The found element
       #
-      def find_button(locator=nil, options={})
-        locator, options = nil, locator if locator.is_a? Hash
+      def find_button(locator=nil, **options)
         find(:button, locator, options)
       end
 
@@ -131,7 +128,7 @@ module Capybara
       #
       # @return [Capybara::Node::Element]   The found element
       #
-      def find_by_id(id, options={})
+      def find_by_id(id, **options)
         find(:id, id, options)
       end
 
@@ -218,12 +215,11 @@ module Capybara
       #   @param [Hash] options                      Additional options; see {#all}
       # @return [Capybara::Node::Element]            The found element or nil
       #
-      def first(*args)
+      def first(*args, **options)
         if Capybara.wait_on_first_by_default
-          options = if args.last.is_a?(Hash) then args.pop.dup else {} end
-          args.push({minimum: 1}.merge(options))
+          options = {minimum: 1}.merge(options)
         end
-        all(*args).first
+        all(*args, **options).first
       rescue Capybara::ExpectationNotMet
         nil
       end

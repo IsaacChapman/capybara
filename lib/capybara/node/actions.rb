@@ -18,8 +18,7 @@ module Capybara
       #
       #   @param [String] locator      Text, id or value of link or button
       #
-      def click_link_or_button(locator=nil, options={})
-        locator, options = nil, locator if locator.is_a? Hash
+      def click_link_or_button(locator=nil, **options)
         find(:link_or_button, locator, options).click
       end
       alias_method :click_on, :click_link_or_button
@@ -35,8 +34,7 @@ module Capybara
       #   @param [String] locator         text, id, title or nested image's alt attribute
       #   @param options                  See {Capybara::Node::Finders#find_link}
       #
-      def click_link(locator=nil, options={})
-        locator, options = nil, locator if locator.is_a? Hash
+      def click_link(locator=nil, **options)
         find(:link, locator, options).click
       end
 
@@ -52,8 +50,7 @@ module Capybara
       # @overload click_button([locator], options)
       #   @param [String] locator      Which button to find
       #   @param options     See {Capybara::Node::Finders#find_button}
-      def click_button(locator=nil, options={})
-        locator, options = nil, locator if locator.is_a? Hash
+      def click_button(locator=nil, **options)
         find(:button, locator, options).click
       end
 
@@ -75,11 +72,7 @@ module Capybara
       # @option options [String] name           Match fields that match the name attribute
       # @option options [String] placeholder    Match fields that match the placeholder attribute
       #
-      def fill_in(locator, options={})
-        locator, options = nil, locator if locator.is_a? Hash
-        raise "Must pass a hash containing 'with'" if not options.is_a?(Hash) or not options.has_key?(:with)
-        with = options.delete(:with)
-        fill_options = options.delete(:fill_options)
+      def fill_in(locator=nil, with:, fill_options: {}, **options)
         find(:fillable_field, locator, options).set(with, fill_options)
       end
 
@@ -101,10 +94,7 @@ module Capybara
       #   @option options [String] name           Match fields that match the name attribute
       #   @macro waiting_behavior
       #   @macro label_click
-      def choose(locator, options={})
-        locator, options = nil, locator if locator.is_a? Hash
-        allow_label_click = options.delete(:allow_label_click) { Capybara.automatic_label_click }
-
+      def choose(locator=nil, allow_label_click: Capybara.automatic_label_click, **options)
         begin
           find(:radio_button, locator, options).set(true)
         rescue Capybara::ElementNotFound => e
@@ -136,10 +126,7 @@ module Capybara
       #   @macro label_click
       #   @macro waiting_behavior
       #
-      def check(locator, options={})
-        locator, options = nil, locator if locator.is_a? Hash
-        allow_label_click = options.delete(:allow_label_click) { Capybara.automatic_label_click }
-
+      def check(locator, allow_label_click: Capybara.automatic_label_click, **options)
         begin
           find(:checkbox, locator, options).set(true)
         rescue Capybara::ElementNotFound => e
@@ -171,10 +158,7 @@ module Capybara
       #   @macro label_click
       #   @macro waiting_behavior
       #
-      def uncheck(locator, options={})
-        locator, options = nil, locator if locator.is_a? Hash
-        allow_label_click = options.delete(:allow_label_click) { Capybara.automatic_label_click }
-
+      def uncheck(locator=nil, allow_label_click: Capybara.automatic_label_click, **options)
         begin
           find(:checkbox, locator, options).set(false)
         rescue Capybara::ElementNotFound => e
@@ -205,9 +189,8 @@ module Capybara
       # @param [String] value                   Which option to select
       # @option options [String] :from  The id, name or label of the select box
       #
-      def select(value, options={})
-        if options.has_key?(:from)
-          from = options.delete(:from)
+      def select(value=nil, from: nil, **options)
+        if from
           find(:select, from, options).find(:option, value, options).select_option
         else
           find(:option, value, options).select_option
@@ -227,9 +210,8 @@ module Capybara
       # @param [String] value                   Which option to unselect
       # @param [Hash{:from => String}] options  The id, name or label of the select box
       #
-      def unselect(value, options={})
-        if options.has_key?(:from)
-          from = options.delete(:from)
+      def unselect(value=nil, from: nil, **options)
+        if from
           find(:select, from, options).find(:option, value, options).unselect_option
         else
           find(:option, value, options).unselect_option
@@ -254,8 +236,7 @@ module Capybara
       # @option options [String] id             Match fields that match the id attribute
       # @option options [String] name           Match fields that match the name attribute
       #
-      def attach_file(locator, path, options={})
-        locator, path, options = nil, locator, path if path.is_a? Hash
+      def attach_file(locator=nil, path, **options)
         Array(path).each do |p|
           raise Capybara::FileNotFound, "cannot attach file, #{p} does not exist" unless File.exist?(p.to_s)
         end

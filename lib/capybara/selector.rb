@@ -76,7 +76,7 @@ module Capybara
       @match and @match.call(locator)
     end
 
-    def filter(name, options={}, &block)
+    def filter(name, **options, &block)
       custom_filters[name] = Filter.new(name, block, options)
     end
 

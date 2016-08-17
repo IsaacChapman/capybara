@@ -7,8 +7,8 @@ module Capybara
       VALID_KEYS = [:text, :visible, :between, :count, :maximum, :minimum, :exact, :match, :wait, :filter_set]
       VALID_MATCH = [:first, :smart, :prefer_exact, :one]
 
-      def initialize(*args)
-        @options = if args.last.is_a?(Hash) then args.pop.dup else {} end
+      def initialize(*args, **options)
+        @options = options.dup
 
         if args[0].is_a?(Symbol)
           @selector = Selector.all[args.shift]
@@ -21,6 +21,7 @@ module Capybara
 
         warn "Unused parameters passed to #{self.class.name} : #{args.to_s}" unless args.empty?
 
+        # TODO: make this better somehow
         # for compatibility with Capybara 2.0
         if Capybara.exact_options and @selector == Selector.all[:option]
           @options[:exact] = true
@@ -83,23 +84,15 @@ module Capybara
 
       def exact?
         return false if !supports_exact?
-        if options.has_key?(:exact)
-          @options[:exact]
-        else
-          Capybara.exact
-        end
+        options.fetch(:exact, Capybara.exact)
       end
 
       def match
-        if options.has_key?(:match)
-          @options[:match]
-        else
-          Capybara.match
-        end
+        options.fetch(:match, Capybara.match)
       end
 
       def xpath(exact=nil)
-        exact = self.exact? if exact == nil
+        exact = self.exact? if exact.nil?
         if @expression.respond_to?(:to_xpath) and exact
           @expression.to_xpath(:exact)
         else

@@ -29,7 +29,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
     @browser
   end
 
-  def initialize(app, options={})
+  def initialize(app, **options)
     begin
       require 'selenium-webdriver'
     rescue LoadError => e
@@ -90,7 +90,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
     browser.execute_script "return #{script}"
   end
 
-  def save_screenshot(path, options={})
+  def save_screenshot(path, **options)
     browser.save_screenshot(path)
   end
 
@@ -218,7 +218,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
     browser.switch_to.window(handle) { yield }
   end
 
-  def accept_modal(type, options={}, &blk)
+  def accept_modal(type, **options, &blk)
     options = options.dup
     yield if block_given?
     modal = find_modal(options)
@@ -228,7 +228,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
     message
   end
 
-  def dismiss_modal(type, options={}, &blk)
+  def dismiss_modal(type, **options, &blk)
     yield if block_given?
     modal = find_modal(options)
     message = modal.text
@@ -269,7 +269,7 @@ class Capybara::Selenium::Driver < Capybara::Driver::Base
     end
   end
 
-  def find_modal(options={})
+  def find_modal(**options)
     # Selenium has its own built in wait (2 seconds)for a modal to show up, so this wait is really the minimum time
     # Actual wait time may be longer than specified
     wait = Selenium::WebDriver::Wait.new(
