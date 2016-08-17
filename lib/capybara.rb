@@ -408,7 +408,6 @@ module Capybara
   require 'capybara/queries/title_query'
   require 'capybara/queries/current_path_query'
   require 'capybara/queries/match_query'
-  require 'capybara/query'
 
   require 'capybara/node/finders'
   require 'capybara/node/matchers'
