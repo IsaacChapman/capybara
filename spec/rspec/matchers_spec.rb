@@ -79,7 +79,7 @@ RSpec.describe Capybara::RSpecMatchers do
       it "supports compounding" do
         expect("<h1>Text</h1><h2>Text</h2>").to have_css('h1').and have_css('h2')
         expect("<h1>Text</h1><h2>Text</h2>").to have_css('h3').or have_css('h1')
-      end if RSpec::Version::STRING.to_f >= 3.0
+      end
     end
 
     context "on a page or node" do
@@ -146,7 +146,7 @@ RSpec.describe Capybara::RSpecMatchers do
       it "supports compounding" do
         expect("<h1>Text</h1><h2>Text</h2>").to have_xpath('//h1').and have_xpath('//h2')
         expect("<h1>Text</h1><h2>Text</h2>").to have_xpath('//h3').or have_xpath('//h1')
-      end if RSpec::Version::STRING.to_f >= 3.0
+      end
     end
 
     context "on a page or node" do
@@ -252,7 +252,7 @@ RSpec.describe Capybara::RSpecMatchers do
     it "supports compounding" do
       expect("<h1>Text</h1><h2>Text</h2>").to have_selector('//h1').and have_selector('//h2')
       expect("<h1>Text</h1><h2>Text</h2>").to have_selector('//h3').or have_selector('//h1')
-    end if RSpec::Version::STRING.to_f >= 3.0
+    end
   end
 
   describe "have_content matcher" do
@@ -341,7 +341,7 @@ RSpec.describe Capybara::RSpecMatchers do
     it "supports compounding" do
       expect("<h1>Text</h1><h2>And</h2>").to have_content('Text').and have_content('And')
       expect("<h1>Text</h1><h2>Or</h2>").to have_content('XYZ').or have_content('Or')
-    end if RSpec::Version::STRING.to_f >= 3.0
+    end
   end
 
   describe "have_text matcher" do
@@ -475,7 +475,7 @@ RSpec.describe Capybara::RSpecMatchers do
     it "supports compounding" do
       expect("<h1>Text</h1><h2>And</h2>").to have_text('Text').and have_text('And')
       expect("<h1>Text</h1><h2>Or</h2>").to have_text('Not here').or have_text('Or')
-    end if RSpec::Version::STRING.to_f >= 3.0
+    end
   end
 
   describe "have_link matcher" do
@@ -498,7 +498,7 @@ RSpec.describe Capybara::RSpecMatchers do
     it "supports compounding" do
       expect(html).to have_link('Just a link').and have_link('Another link')
       expect(html).to have_link('Not a link').or have_link('Another link')
-    end if RSpec::Version::STRING.to_f >= 3.0
+    end
   end
 
   describe "have_title matcher" do
@@ -563,7 +563,7 @@ RSpec.describe Capybara::RSpecMatchers do
 
     it "supports compounding" do
       expect("<title>I compound</title>").to have_title('I dont compound').or have_title('I compound')
-    end if RSpec::Version::STRING.to_f >= 3.0
+    end
   end
 
   describe "have_current_path matcher" do
@@ -609,7 +609,7 @@ RSpec.describe Capybara::RSpecMatchers do
     it "supports compounding" do
       visit('/with_html')
       expect(page).to have_current_path('/not_with_html').or have_current_path('/with_html')
-    end if RSpec::Version::STRING.to_f >= 3.0
+    end
   end
 
   describe "have_button matcher" do
@@ -631,7 +631,7 @@ RSpec.describe Capybara::RSpecMatchers do
 
     it "supports compounding" do
       expect(html).to have_button('Not this button').or have_button('A button')
-    end if RSpec::Version::STRING.to_f >= 3.0
+    end
   end
 
   describe "have_field matcher" do
@@ -676,7 +676,7 @@ RSpec.describe Capybara::RSpecMatchers do
 
     it "supports compounding" do
       expect(html).to have_field('Not this one').or have_field('Text field')
-    end if RSpec::Version::STRING.to_f >= 3.0
+    end
   end
 
   describe "have_checked_field matcher" do
@@ -725,7 +725,7 @@ RSpec.describe Capybara::RSpecMatchers do
 
     it "supports compounding" do
       expect(html).to have_checked_field('not this one').or have_checked_field('it is checked')
-    end if RSpec::Version::STRING.to_f >= 3.0
+    end
   end
 
   describe "have_unchecked_field matcher" do
@@ -774,7 +774,7 @@ RSpec.describe Capybara::RSpecMatchers do
 
     it "supports compounding" do
       expect(html).to have_unchecked_field('it is checked').or have_unchecked_field('unchecked field')
-    end if RSpec::Version::STRING.to_f >= 3.0
+    end
   end
 
   describe "have_select matcher" do
@@ -800,7 +800,7 @@ RSpec.describe Capybara::RSpecMatchers do
 
     it "supports compounding" do
       expect(html).to have_select('Not this one').or have_select('Select Box')
-    end if RSpec::Version::STRING.to_f >= 3.0
+    end
   end
 
   describe "have_table matcher" do
@@ -822,6 +822,6 @@ RSpec.describe Capybara::RSpecMatchers do
 
     it "supports compounding" do
       expect(html).to have_table('nope').or have_table('Lovely table')
-    end if RSpec::Version::STRING.to_f >= 3.0
+    end
   end
 end

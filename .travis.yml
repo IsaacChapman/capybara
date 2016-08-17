@@ -23,10 +23,6 @@ matrix:
           packages:
             - google-chrome-stable
             - awesome
-    - gemfile: gemfiles/Gemfile.ruby-19
-      rvm: 1.9.3
-    - gemfile: gemfiles/Gemfile.base-versions
-      rvm: 1.9.3
     - gemfile: gemfiles/Gemfile.beta-versions
       rvm: 2.4.0-preview1
     - gemfile: gemfiles/Gemfile.beta-marionette
