@@ -49,9 +49,7 @@ class Capybara::Selenium::Node < Capybara::Driver::Node
       path_names = value.to_s.empty? ? [] : value
       native.send_keys(*path_names)
     elsif tag_name == 'textarea' or tag_name == 'input'
-      if readonly?
-        warn "Attempt to set readonly element with value: #{value} \n *This will raise an exception in a future version of Capybara"
-      elsif value.to_s.empty?
+      if value.to_s.empty?
         native.clear
       else
         if options[:clear] == :backspace
