@@ -2,7 +2,7 @@
 module Capybara
   module RSpecMatchers
     class Matcher
-      include ::RSpec::Matchers::Composable if defined?(::RSpec::Expectations::Version)
+      include ::RSpec::Matchers::Composable if defined?(::RSpec::Matchers)
 
       def wrap(actual)
         if actual.respond_to?("has_selector?")
@@ -229,7 +229,7 @@ module Capybara
       MatchSelector.new(*args)
     end
 
-    ::RSpec::Matchers.define_negated_matcher :not_match_selector, :match_selector
+    ::RSpec::Matchers.define_negated_matcher :not_match_selector, :match_selector if defined?(::RSpec::Matchers)
 
 
     def have_xpath(xpath, options={})
