@@ -2,8 +2,8 @@ language: ruby
 sudo: required
 dist: trusty
 rvm:
-  - 2.0.0
   - 2.2
+  - 2.3
   - jruby-9.0.5.0
   - rbx-3.26
 gemfile:
@@ -11,7 +11,6 @@ gemfile:
 matrix:
   include:
     - gemfile: Gemfile
-      rvm: 2.3.1
       env: WINDOW_TEST=true
     - gemfile: gemfiles/Gemfile.rspec-34
       rvm: 2.3.1
