@@ -77,7 +77,7 @@ module Capybara
     # Checks if a count of 0 is valid for the given options hash.
     # Returns false if options hash does not specify any count options.
     #
-    def expects_none?(options={})
+    def expects_none?(**options)
       if [:count, :maximum, :minimum, :between].any? { |k| options.has_key? k }
         matches_count?(0,options)
       else
